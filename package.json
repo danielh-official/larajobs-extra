@@ -49,7 +49,6 @@
 	},
 	"dependencies": {
 		"dexie": "^4.2.1",
-		"feedsmith": "^2.6.1",
 		"xml-js": "^1.6.11"
 	}
 }
