@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class="dark:text-white dark:bg-gray-800 p-4 rounded shadow">
-  {@render children()}
+	{@render children()}
 </div>
 
 <a

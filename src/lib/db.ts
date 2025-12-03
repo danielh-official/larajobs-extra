@@ -6,7 +6,7 @@ interface JobPosting {
 	name: string;
 	link: string;
 	published_date: string;
-  parsed_published_date?: Date;
+	parsed_published_date?: Date;
 	creator: string;
 	category: string;
 	location: string;
@@ -31,7 +31,7 @@ db.version(1).stores({
 		'name',
 		'link',
 		'published_date',
-    'parsed_published_date',
+		'parsed_published_date',
 		'creator',
 		'category',
 		'location',
