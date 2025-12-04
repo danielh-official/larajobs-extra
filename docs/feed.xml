@@ -1,0 +1,357 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:job="https://larajobs.com"
+  version="2.0">
+  <channel>
+    <title>LaraJobs</title>
+    <atom:link href="https://larajobs.com" rel="self" type="application/rss+xml" />
+    <link>https://larajobs.com</link>
+    <description>Your Laravel Jobs source.</description>
+    <lastBuildDate>Thu, 04 Dec 2025 10:58:15 +0000</lastBuildDate>
+    <language>en-US</language>
+    <sy:updatePeriod>hourly</sy:updatePeriod>
+    <sy:updateFrequency>1</sy:updateFrequency>
+    <generator>https://larajobs.com</generator>
+    <item>
+      <title>Full-Stack Developer (Laravel, Vue JS, Angular)</title>
+      <link>https://larajobs.com/job/3781</link>
+      <pubDate>Thu, 04 Dec 2025 10:58:15 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ FC Bayern München AG ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Munich, Germany ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ FC Bayern München AG ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/1If5yK9F0z0RwhQCQbAzUvrqgfZuP7aGOJxtjeHZ.webp</job:company_logo>
+      <job:tags>
+<![CDATA[ Angular,Fullstack,Laravel,SQL,VueJS ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3781</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Full Stack Developer</title>
+      <link>https://larajobs.com/job/3780</link>
+      <pubDate>Wed, 03 Dec 2025 03:30:30 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ ZenOne, Inc. ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remove ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ ZenOne, Inc. ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/UPkiCHJLRfc2Tf29OXbUcWNJtjMG0NqUQe4bFuKT.png</job:company_logo>
+      <job:tags>
+<![CDATA[ API,Laravel,PHP,Postgres,VueJS ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3780</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Full Stack Laravel | Vue Engineer</title>
+      <link>https://larajobs.com/job/3779</link>
+      <pubDate>Tue, 02 Dec 2025 23:58:59 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ KYC Hospitality ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote | Vietnam, Thailand, Hong Kong ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ KYC Hospitality ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/gs5y8o9gd1bxKMRKGSXijb42mX135oGhSIYNF3lZ.jpg</job:company_logo>
+      <job:tags>
+<![CDATA[ Fullstack,Laravel,PHP,VueJS ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3779</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Data Engineer</title>
+      <link>https://larajobs.com/job/3778</link>
+      <pubDate>Sat, 29 Nov 2025 00:05:00 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Definable Solutions ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote - Brazil ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Definable Solutions ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/</job:company_logo>
+      <job:tags>
+<![CDATA[ ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3778</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Software Engineer - Laravel / Filament / CraftCMS</title>
+      <link>https://larajobs.com/job/3776</link>
+      <pubDate>Mon, 24 Nov 2025 16:45:16 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Resi ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote / USA ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Resi ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/ITrMzlPSuvLn5ZFsCRJRk89tOnV0eSNiEJhCtWkS.svg</job:company_logo>
+      <job:tags>
+<![CDATA[ Craft CMS,Full Time,Fullstack,Laravel,Livewire ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3776</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Full-Stack Engineer: Laravel 12 + Vue 3 + TypeScript (Series A Startup)</title>
+      <link>https://larajobs.com/job/3775</link>
+      <pubDate>Sat, 22 Nov 2025 19:07:36 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Wunderite, Inc. ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote, USA only with optional adventure-style team offsites each year ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ $135,000 to $155,000 plus stock options, medical coverage (100% premium covered), dental, HSA, 401(k), unlimited PTO, and a fully remote setup ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Wunderite, Inc. ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/yyaCw4k06vaSq9hQyhjHd1Cnj7NgrtDOthXTQXty.png</job:company_logo>
+      <job:tags>
+<![CDATA[ AWS,Laravel,MySQL,Redis,VueJS ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3775</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Freelance Laravel Developer (Remote, Contract, Overlap with Pacific time)</title>
+      <link>https://larajobs.com/job/3774</link>
+      <pubDate>Thu, 20 Nov 2025 22:57:42 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Apero Creative Development ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Apero Creative Development ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/NIJmcE00SJvi9LNxbh0doHbeoxWbicYYJZ767GGK.jpg</job:company_logo>
+      <job:tags>
+<![CDATA[ ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3774</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Senior Laravel/Filament Developer</title>
+      <link>https://larajobs.com/job/3772</link>
+      <pubDate>Thu, 20 Nov 2025 11:21:14 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ CMD Software ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Queensland, Australia / Remote GMT+10 ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ CONTRACTOR ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ AUD 70-100/hr ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ CMD Software ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/T1OghzPU5vjNs31gEUGZQTmqYfoAaQ2p0ZBod03e.png</job:company_logo>
+      <job:tags>
+<![CDATA[ Engineer,Fullstack,Livewire,Senior,TALL Stack ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3772</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>Senior Full Stack Developer</title>
+      <link>https://larajobs.com/job/3771</link>
+      <pubDate>Wed, 19 Nov 2025 21:54:40 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Apex Trading ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote USA ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ $150,000-180,000 ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Apex Trading ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/</job:company_logo>
+      <job:tags>
+<![CDATA[ ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3771</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+    <item>
+      <title>PHP Laravel Developer</title>
+      <link>https://larajobs.com/job/3770</link>
+      <pubDate>Fri, 14 Nov 2025 21:33:11 +0000</pubDate>
+      <dc:creator>
+<![CDATA[ Particular Collective ]]>
+</dc:creator>
+      <category>
+<![CDATA[ Job ]]>
+</category>
+      <job:location>
+<![CDATA[ Remote / Minneapolis ]]>
+</job:location>
+      <job:job_type>
+<![CDATA[ FULL_TIME ]]>
+</job:job_type>
+      <job:salary>
+<![CDATA[ $92,000 - $95,000 a year ]]>
+</job:salary>
+      <job:company>
+<![CDATA[ Particular Collective ]]>
+</job:company>
+      <job:company_logo>https://larajobs.com/logos/4wPUBonkY4O2wvkgKenySmfj9J9tsZR9jSJrNqVA.png</job:company_logo>
+      <job:tags>
+<![CDATA[ Backend,Laravel,MySQL,Symfony,VueJS ]]>
+</job:tags>
+      <guid isPermaLink="false">https://larajobs.com/job/3770</guid>
+      <description>
+<![CDATA[ ]]>
+</description>
+      <content:encoded>
+<![CDATA[ ]]>
+</content:encoded>
+    </item>
+  </channel>
+</rss>

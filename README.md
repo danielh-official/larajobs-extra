@@ -1,38 +1,29 @@
-# sv
+# LaraJobs Extra
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A web app for parsing and filtering [LaraJobs.com](https://larajobs.com) RSS feed.
 
-## Creating a project
+Built on [SvelteKit](https://svelte.dev/docs/kit/introduction).
 
-If you're seeing this, you've probably already done this step. Congrats!
+For any bug reports or feature requests, visit the [issues](https://github.com/danielh-official/larajobs-extra/issues) page.
 
-```sh
-# create a new project in the current directory
-npx sv create
+## Local Development
 
-# create a new project in my-app
-npx sv create my-app
-```
+1. Clone: `git clone https://github.com/danielh-official/larajobs-extra.git`
+2. Install packages: `pnpm install`
+3. Run the server: `pnpm dev`
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. Navigate to <https://larajobs.com/feed>
+2. Copy and paste the XML data into the text area box (click "Show RSS Parser" if you don't see it)
+3. Click "Parse RSS Content", and the job postings should show up
+4. Click "Show Filters" to show the filtering box
 
-```sh
-npm run dev
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## What should it look similar to?
 
-## Building
+![screenshot](./docs/screenshot.png)
 
-To create a production version of your app:
+## larajobs.com is down
 
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+If [larajobs.com](https://larajobs.com) is down, and you want to work on development, you may copy and paste the sample [feed.xml](./docs/feed.xml) file provided.
