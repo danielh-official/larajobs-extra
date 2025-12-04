@@ -39,6 +39,7 @@
 			showFilters = localStorage.getItem('showFilters') === 'true' ? true : false;
 
 			company = page.url.searchParams.get('company') || '';
+			location = page.url.searchParams.get('location') || '';
 			tags = page.url.searchParams.get('tags') || '';
 			publishedStartDate = page.url.searchParams.get('published_start_date') || '';
 			publishedEndDate = page.url.searchParams.get('published_end_date') || '';
@@ -244,6 +245,12 @@
 		return page.url.searchParams.get('company') || '';
 	});
 
+	let location = $state<string>(page.url.searchParams.get('location') || '');
+
+	let queryParamLocation = $derived.by(() => {
+		return page.url.searchParams.get('location') || '';
+	});
+
 	let tags = $state<string>(page.url.searchParams.get('tags') || '');
 
 	let queryParamTags = $derived.by(() => {
@@ -307,6 +314,7 @@
 	function applyFilters() {
 		const url = new URL(page.url);
 		company && url.searchParams.set('company', company);
+    location && url.searchParams.set('location', location);
 		tags && url.searchParams.set('tags', tags);
 		publishedStartDate && url.searchParams.set('published_start_date', publishedStartDate);
 		publishedEndDate && url.searchParams.set('published_end_date', publishedEndDate);
@@ -317,6 +325,10 @@
 
 		if (!tags) {
 			url.searchParams.delete('tags');
+		}
+
+		if (!location) {
+			url.searchParams.delete('location');
 		}
 
 		if (!publishedStartDate) {
@@ -332,6 +344,7 @@
 
 	function clearFilters() {
 		company = '';
+		location = '';
 		tags = '';
 		publishedStartDate = '';
 		publishedEndDate = '';
@@ -342,6 +355,7 @@
 
 	const postings = $derived.by(() => {
 		queryParamCompany;
+		queryParamLocation;
 		queryParamTags;
 		queryParamPublishedStartDate;
 		queryParamPublishedEndDate;
@@ -352,6 +366,12 @@
 			if (queryParamCompany.trim() !== '') {
 				collection = collection.filter((posting) =>
 					posting.company.toLowerCase().includes(company.trim().toLowerCase())
+				);
+			}
+
+			if (queryParamLocation.trim() !== '') {
+				collection = collection.filter((posting) =>
+					posting.location.toLowerCase().includes(location.trim().toLowerCase())
 				);
 			}
 
@@ -396,6 +416,10 @@
 		});
 	});
 </script>
+
+<svelte:head>
+  <title>LaraJobs Extra</title>
+</svelte:head>
 
 {#if loading}
 	<div class="flex justify-center items-center h-screen">
@@ -499,9 +523,9 @@
 				</div>
 			</div>
 
-			<!-- MARK: - Company Filter -->
-
 			<div class="flex flex-col gap-y-4">
+				<!-- MARK: - Company Filter -->
+
 				<div>
 					<label class="block mb-2 font-semibold" for="company">Company</label>
 					<input
@@ -511,6 +535,21 @@
 						placeholder="Enter company name to filter by"
 						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
 						bind:value={company}
+						onkeydown={(e) => e.key === 'Enter' && applyFilters()}
+					/>
+				</div>
+
+				<!-- MARK: - Company Filter -->
+
+				<div>
+					<label class="block mb-2 font-semibold" for="company">Location</label>
+					<input
+						type="text"
+						id="location"
+						name="location"
+						placeholder="Enter location to filter by"
+						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
+						bind:value={location}
 						onkeydown={(e) => e.key === 'Enter' && applyFilters()}
 					/>
 				</div>
