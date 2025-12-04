@@ -457,6 +457,7 @@
 
 <svelte:head>
 	<title>LaraJobs Extra</title>
+  <meta name="description" content="An enhanced job listing platform for LaraJobs with extra filtering capabilities." />
 </svelte:head>
 
 {#if loading}
@@ -518,7 +519,7 @@
 		<div class="my-6 text-center flex flex-col gap-y-2">
 			<div>
 				<textarea
-					class="bg-gray-100 dark:bg-gray-700"
+					class="bg-gray-100 dark:bg-gray-700 w-full"
 					bind:value={content}
 					rows="4"
 					cols="80"
@@ -543,7 +544,7 @@
 
 	{#if showFilters}
 		<div class="max-w-4xl mx-auto my-6 p-4 border rounded shadow">
-			<div class="flex justify-between items-center mb-4">
+			<div class="md:flex justify-between items-center mb-4">
 				<h2 class="text-xl font-bold mb-4">Filters</h2>
 				<div class="mb-4 flex gap-x-4">
 					<button
@@ -740,9 +741,9 @@
 							<img
 								src={posting.company_logo}
 								alt="{posting.company} Logo"
-								class="h-16 mb-2"
-								width="80px"
-								height="100px"
+								class="mb-2"
+								width="120px"
+								height="120px"
 							/>
 						{/if}
 					</div>
