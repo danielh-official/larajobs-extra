@@ -522,10 +522,9 @@
 		<div class="my-6 text-center flex flex-col gap-y-2">
 			<div>
 				<textarea
-					class="bg-gray-100 dark:bg-gray-700 w-full"
+					class="bg-gray-100 dark:bg-gray-700 md:w-1/2 w-full"
 					bind:value={content}
 					rows="4"
-					cols="80"
 					placeholder="Paste RSS feed content here"
 				></textarea>
 			</div>
