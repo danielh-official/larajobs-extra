@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import * as chrono from 'chrono-node';
 
 	let content = $state('');
 	let jsonContent: LaraJobsFeedXml | null = $state(null);
@@ -36,6 +37,11 @@
 			await new Promise((resolve) => setTimeout(resolve, 500));
 			showParseRssContent = localStorage.getItem('showParseRssContent') === 'true' ? true : false;
 			showFilters = localStorage.getItem('showFilters') === 'true' ? true : false;
+
+			company = page.url.searchParams.get('company') || '';
+			tags = page.url.searchParams.get('tags') || '';
+			publishedStartDate = page.url.searchParams.get('published_start_date') || '';
+			publishedEndDate = page.url.searchParams.get('published_end_date') || '';
 		}
 
 		loading = false;
@@ -252,17 +258,58 @@
 			.filter((tag) => tag !== '');
 	});
 
-	let publishedDate = $state<string>(page.url.searchParams.get('published_date') || '');
+	let publishedStartDate = $state<string>(page.url.searchParams.get('published_start_date') || '');
 
-	let queryParamPublishedDate = $derived.by(() => {
-		return page.url.searchParams.get('published_date') || '';
+	let parsedPublishedStartDate = $derived.by(() => {
+		if (publishedStartDate.trim() === '') {
+			return null;
+		}
+		const parsedDate = chrono.parseDate(publishedStartDate);
+		return parsedDate;
+	});
+
+	let queryParamPublishedStartDate = $derived.by(() => {
+		return page.url.searchParams.get('published_start_date') || '';
+	});
+
+	let parsedQueryParamPublishedStartDate = $derived.by(() => {
+		const publishedDateParam = page.url.searchParams.get('published_start_date') || '';
+		if (publishedDateParam.trim() === '') {
+			return null;
+		}
+		const parsedDate = chrono.parseDate(publishedDateParam);
+		return parsedDate;
+	});
+
+	let publishedEndDate = $state<string>(page.url.searchParams.get('published_end_date') || '');
+
+	let parsedPublishedEndDate = $derived.by(() => {
+		if (publishedEndDate.trim() === '') {
+			return null;
+		}
+		const parsedDate = chrono.parseDate(publishedEndDate);
+		return parsedDate;
+	});
+
+	let queryParamPublishedEndDate = $derived.by(() => {
+		return page.url.searchParams.get('published_end_date') || '';
+	});
+
+	let parsedQueryParamPublishedEndDate = $derived.by(() => {
+		const publishedDateParam = page.url.searchParams.get('published_end_date') || '';
+		if (publishedDateParam.trim() === '') {
+			return null;
+		}
+		const parsedDate = chrono.parseDate(publishedDateParam);
+		return parsedDate;
 	});
 
 	function applyFilters() {
 		const url = new URL(page.url);
 		company && url.searchParams.set('company', company);
 		tags && url.searchParams.set('tags', tags);
-		publishedDate && url.searchParams.set('published_date', publishedDate);
+		publishedStartDate && url.searchParams.set('published_start_date', publishedStartDate);
+		publishedEndDate && url.searchParams.set('published_end_date', publishedEndDate);
 
 		if (!company) {
 			url.searchParams.delete('company');
@@ -272,11 +319,23 @@
 			url.searchParams.delete('tags');
 		}
 
-		if (!publishedDate) {
-			url.searchParams.delete('published_date');
+		if (!publishedStartDate) {
+			url.searchParams.delete('published_start_date');
+		}
+
+		if (!publishedEndDate) {
+			url.searchParams.delete('published_end_date');
 		}
 
 		goto(url.toString(), { keepFocus: true });
+	}
+
+	function clearFilters() {
+		company = '';
+		tags = '';
+		publishedStartDate = '';
+		publishedEndDate = '';
+		applyFilters();
 	}
 
 	// MARK: - Postings List
@@ -284,7 +343,8 @@
 	const postings = $derived.by(() => {
 		queryParamCompany;
 		queryParamTags;
-    queryParamPublishedDate;
+		queryParamPublishedStartDate;
+		queryParamPublishedEndDate;
 
 		return liveQuery(async () => {
 			let collection = db.postings.toCollection();
@@ -310,10 +370,27 @@
 				}
 			}
 
-      if (queryParamPublishedDate.trim() !== '') {
-        // Currently, we are only sorting by published date in descending order.
-        // Additional filtering logic can be added here if needed in the future.
-      }
+			if (queryParamPublishedStartDate.trim() !== '') {
+				const filterDate = parsedQueryParamPublishedStartDate;
+				if (filterDate) {
+					collection = collection.filter((posting) => {
+						if (!posting.parsed_published_date) return false;
+						const postingDate = new Date(posting.parsed_published_date);
+						return postingDate >= filterDate;
+					});
+				}
+			}
+
+			if (queryParamPublishedEndDate.trim() !== '') {
+				const filterDate = parsedQueryParamPublishedEndDate;
+				if (filterDate) {
+					collection = collection.filter((posting) => {
+						if (!posting.parsed_published_date) return false;
+						const postingDate = new Date(posting.parsed_published_date);
+						return postingDate <= filterDate;
+					});
+				}
+			}
 
 			return await collection.sortBy('parsed_published_date').then((results) => results.reverse());
 		});
@@ -415,16 +492,14 @@
 					</button>
 					<button
 						class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-gray-500 border-gray-500 hover:text-gray-500"
-						onclick={() => {
-							company = '';
-							tags = '';
-							applyFilters();
-						}}
+						onclick={clearFilters}
 					>
 						Clear Filters
 					</button>
 				</div>
 			</div>
+
+			<!-- MARK: - Company Filter -->
 
 			<div class="flex flex-col gap-y-4">
 				<div>
@@ -440,6 +515,8 @@
 					/>
 				</div>
 
+				<!-- MARK: - Tags Filter -->
+
 				<div>
 					<label class="block mb-2 font-semibold" for="tags">Tags</label>
 					<input
@@ -453,16 +530,64 @@
 					/>
 				</div>
 
-				<div>
-					<label class="block mb-2 font-semibold" for="published-date">Published Date</label>
-					<input
-						type="text"
-						disabled
-						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
-						value="Filtered postings are sorted by published date in descending order."
-						id="published-date"
-						name="published-date"
-					/>
+				<!-- MARK: - Published Date Filter -->
+
+				<div class="font-semibold">Published Date</div>
+
+				<small class="text-gray-500"
+					>* You can enter dates in various formats, e.g., "2023-01-01", "January 1, 2023", "1st Jan
+					2023", or even "7 days ago".</small
+				>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 ml-4">
+					<div>
+						<label class="block mb-2 font-semibold" for="published-start-date">From</label>
+						<input
+							type="text"
+							class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
+							id="published-start-date"
+							name="published-start-date"
+							bind:value={publishedStartDate}
+							onkeydown={(e) => e.key === 'Enter' && applyFilters()}
+							placeholder="e.g., 2023-01-01 or January 1, 2023"
+						/>
+						<div>
+							{#if parsedPublishedStartDate}
+								<small class="text-green-500"
+									>Preview:
+									{parsedPublishedStartDate.toLocaleDateString() +
+										' ' +
+										parsedPublishedStartDate.toLocaleTimeString()}</small
+								>
+							{:else if publishedStartDate.trim() !== ''}
+								<small class="text-red-500">Could not parse start date.</small>
+							{/if}
+						</div>
+					</div>
+					<div>
+						<label class="block mb-2 font-semibold" for="published-end-date">To</label>
+						<input
+							type="text"
+							class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
+							id="published-end-date"
+							name="published-end-date"
+							bind:value={publishedEndDate}
+							onkeydown={(e) => e.key === 'Enter' && applyFilters()}
+							placeholder="e.g., 2023-01-01 or January 1, 2023"
+						/>
+						<div>
+							{#if parsedPublishedEndDate}
+								<small class="text-green-500"
+									>Preview:
+									{parsedPublishedEndDate.toLocaleDateString() +
+										' ' +
+										parsedPublishedEndDate.toLocaleTimeString()}</small
+								>
+							{:else if publishedEndDate.trim() !== ''}
+								<small class="text-red-500">Could not parse end date.</small>
+							{/if}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
