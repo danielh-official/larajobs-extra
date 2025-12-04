@@ -37,12 +37,6 @@
 			await new Promise((resolve) => setTimeout(resolve, 500));
 			showParseRssContent = localStorage.getItem('showParseRssContent') === 'true' ? true : false;
 			showFilters = localStorage.getItem('showFilters') === 'true' ? true : false;
-
-			company = page.url.searchParams.get('company') || '';
-			location = page.url.searchParams.get('location') || '';
-			tags = page.url.searchParams.get('tags') || '';
-			publishedStartDate = page.url.searchParams.get('published_start_date') || '';
-			publishedEndDate = page.url.searchParams.get('published_end_date') || '';
 		}
 
 		loading = false;
