@@ -1,7 +1,7 @@
 {
   "short_name": "LaraJobs Extra",
   "name": "LaraJobs Extra",
-  "start_url": "/",
+  "start_url": "/larajobs-extra",
   "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
