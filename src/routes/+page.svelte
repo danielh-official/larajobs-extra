@@ -245,6 +245,18 @@
 		return page.url.searchParams.get('location') || '';
 	});
 
+	let type = $state<string>(page.url.searchParams.get('type') || '');
+
+	let queryParamType = $derived.by(() => {
+		return page.url.searchParams.get('type') || '';
+	});
+
+	let salary = $state<string>(page.url.searchParams.get('salary') || '');
+
+	let queryParamSalary = $derived.by(() => {
+		return page.url.searchParams.get('salary') || '';
+	});
+
 	let tags = $state<string>(page.url.searchParams.get('tags') || '');
 
 	let queryParamTags = $derived.by(() => {
@@ -308,7 +320,9 @@
 	function applyFilters() {
 		const url = new URL(page.url);
 		company && url.searchParams.set('company', company);
-    location && url.searchParams.set('location', location);
+		location && url.searchParams.set('location', location);
+		type && url.searchParams.set('type', type);
+		salary && url.searchParams.set('salary', salary);
 		tags && url.searchParams.set('tags', tags);
 		publishedStartDate && url.searchParams.set('published_start_date', publishedStartDate);
 		publishedEndDate && url.searchParams.set('published_end_date', publishedEndDate);
@@ -325,6 +339,14 @@
 			url.searchParams.delete('location');
 		}
 
+		if (!type) {
+			url.searchParams.delete('type');
+		}
+
+		if (!salary) {
+			url.searchParams.delete('salary');
+		}
+
 		if (!publishedStartDate) {
 			url.searchParams.delete('published_start_date');
 		}
@@ -339,6 +361,8 @@
 	function clearFilters() {
 		company = '';
 		location = '';
+		type = '';
+		salary = '';
 		tags = '';
 		publishedStartDate = '';
 		publishedEndDate = '';
@@ -350,9 +374,11 @@
 	const postings = $derived.by(() => {
 		queryParamCompany;
 		queryParamLocation;
+		queryParamType;
 		queryParamTags;
 		queryParamPublishedStartDate;
 		queryParamPublishedEndDate;
+		queryParamSalary;
 
 		return liveQuery(async () => {
 			let collection = db.postings.toCollection();
@@ -367,6 +393,24 @@
 				collection = collection.filter((posting) =>
 					posting.location.toLowerCase().includes(location.trim().toLowerCase())
 				);
+			}
+
+			if (queryParamType.trim() !== '') {
+				collection = collection.filter((posting) =>
+					posting.job_type.toLowerCase().includes(type.trim().toLowerCase())
+				);
+			}
+
+			if (queryParamSalary.trim() !== '') {
+				if (salary.trim().toLowerCase() === 'none') {
+					collection = collection.filter((posting) => !posting.salary.trim());
+				} else if (salary.trim().toLowerCase() === 'exists') {
+					collection = collection.filter((posting) => !!posting.salary.trim());
+				} else {
+					collection = collection.filter((posting) =>
+						posting.salary.toLowerCase().includes(salary.trim().toLowerCase())
+					);
+				}
 			}
 
 			if (parsedTags.length > 0) {
@@ -412,7 +456,7 @@
 </script>
 
 <svelte:head>
-  <title>LaraJobs Extra</title>
+	<title>LaraJobs Extra</title>
 </svelte:head>
 
 {#if loading}
@@ -533,10 +577,10 @@
 					/>
 				</div>
 
-				<!-- MARK: - Company Filter -->
+				<!-- MARK: - Location Filter -->
 
 				<div>
-					<label class="block mb-2 font-semibold" for="company">Location</label>
+					<label class="block mb-2 font-semibold" for="location">Location</label>
 					<input
 						type="text"
 						id="location"
@@ -548,6 +592,42 @@
 					/>
 				</div>
 
+				<!-- MARK: - Type Filter -->
+
+				<div>
+					<label class="block mb-2 font-semibold" for="type">Type</label>
+					<input
+						type="text"
+						id="type"
+						name="type"
+						placeholder="Enter job type to filter by"
+						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
+						bind:value={type}
+						onkeydown={(e) => e.key === 'Enter' && applyFilters()}
+					/>
+				</div>
+
+				<!-- MARK: - Salary Filter -->
+
+				<div>
+					<label class="block mb-2 font-semibold" for="salary">Salary</label>
+					<input
+						type="text"
+						id="salary"
+						name="salary"
+						placeholder="Enter salary to filter by."
+						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
+						bind:value={salary}
+						onkeydown={(e) => e.key === 'Enter' && applyFilters()}
+					/>
+					<div>
+						<small class="text-gray-500"
+							>* To filter postings with no salary specified, enter 'none'. To filter postings with
+							any salary specified, enter 'exists'.</small
+						>
+					</div>
+				</div>
+
 				<!-- MARK: - Tags Filter -->
 
 				<div>
@@ -556,11 +636,17 @@
 						type="text"
 						id="tags"
 						name="tags"
-						placeholder="Enter tags to filter by (comma-separated). To filter by no tags, enter 'none'."
+						placeholder="Enter tags to filter by (comma-separated)."
 						class="ml-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
 						bind:value={tags}
 						onkeydown={(e) => e.key === 'Enter' && applyFilters()}
 					/>
+					<div>
+						<small class="text-gray-500"
+							>* To filter postings with no tags specified, enter 'none'. For multiple tags,
+							separate them with commas (e.g., "remote,full-time").</small
+						>
+					</div>
 				</div>
 
 				<!-- MARK: - Published Date Filter -->
