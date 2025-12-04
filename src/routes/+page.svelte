@@ -457,7 +457,10 @@
 
 <svelte:head>
 	<title>LaraJobs Extra</title>
-  <meta name="description" content="An enhanced job listing platform for LaraJobs with extra filtering capabilities." />
+	<meta
+		name="description"
+		content="An enhanced job listing platform for LaraJobs with extra filtering capabilities."
+	/>
 </svelte:head>
 
 {#if loading}
