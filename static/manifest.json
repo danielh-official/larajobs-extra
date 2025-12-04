@@ -1,0 +1,22 @@
+{
+  "short_name": "LaraJobs Extra",
+  "name": "LaraJobs Extra",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#000000",
+  "description": "An enhanced job listing platform for LaraJobs with extra filtering capabilities.",
+  "icons": [
+    {
+      "src": "/icons/startup.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/startup.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
