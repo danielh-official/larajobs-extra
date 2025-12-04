@@ -8,6 +8,26 @@
 	{@render children()}
 </div>
 
+<footer class="text-center text-sm text-gray-500 my-8">
+	<p>
+		&copy; {new Date().getFullYear()} LaraJobs Extra. Built with
+		<a
+			href="https://svelte.dev"
+			target="_blank"
+			rel="noopener noreferrer"
+			class="text-blue-500 hover:underline">SvelteKit</a
+		>.
+		<br />
+		<a
+			class="text-blue-500 hover:underline"
+			target="_blank"
+			rel="noopener noreferrer"
+			href="https://www.flaticon.com/free-icons/booster"
+			title="booster icons">Booster icons created by Freepik - Flaticon</a
+		>
+	</p>
+</footer>
+
 <a
 	target="_blank"
 	rel="noopener noreferrer"
