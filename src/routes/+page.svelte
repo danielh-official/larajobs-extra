@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import * as chrono from 'chrono-node';
+	import { parseRssContent, type LaraJobsFeedXml } from '$lib';
 
 	let content = $state('');
 	let jsonContent: LaraJobsFeedXml | null = $state(null);
@@ -44,108 +45,11 @@
 
 	// MARK: - RSS Parsing and Database Writing
 
-	interface LaraJobsFeedXml {
-		rss: {
-			channel: {
-				atomLink: {
-					_attributes: {
-						href: string;
-						rel: string;
-						type: string;
-					};
-				};
-				description: {
-					_text: string;
-				};
-				generator: {
-					_text: string;
-				};
-				language: {
-					_text: string;
-				};
-				lastBuildDate: {
-					_text: string;
-				};
-				link: {
-					_text: string;
-				};
-				'sy:updateFrequency': {
-					_text: string;
-				};
-				'sy:updatePeriod': {
-					_text: string;
-				};
-				title: {
-					_text: string;
-				};
-				item: {
-					category: {
-						_cdata: string;
-					};
-					'content:encoded': {
-						_cdata: string;
-					};
-					'dc:creator': {
-						_cdata: string;
-					};
-					description: {
-						_cdata: string;
-					};
-					company: {
-						_cdata: string;
-					};
-					company_logo: {
-						_cdata: string;
-					};
-					guid: {
-						attributes: {
-							isPermaLink: string;
-						};
-						_text: string;
-					};
-					'job:company': {
-						_cdata: string;
-					};
-					'job:company_logo': {
-						_text: string;
-					};
-					'job:job_type': {
-						_cdata: string;
-					};
-					'job:location': {
-						_cdata: string;
-					};
-					'job:salary': {
-						_cdata: string;
-					};
-					'job:tags': {
-						_cdata: string;
-					};
-					link: {
-						_text: string;
-					};
-					pubDate: {
-						_text: string;
-					};
-					title: {
-						_text: string;
-					};
-				}[];
-			};
-		};
-	}
-
-	function parseRssContent() {
+	function parseRssContentFromInput() {
 		parseError = null;
 
 		try {
-			const rssJson = convert.xml2js(content, { compact: true }) as {
-				rss: { channel: { item: Array<any> } };
-			};
-
-			jsonContent = rssJson as LaraJobsFeedXml;
-
-			writeToDatabase(jsonContent);
+			writeToIndexedDB(parseRssContent(content));
 		} catch (error) {
 			console.error('Error parsing RSS feed:', error);
 			parseError = 'Failed to parse RSS feed. Please check the content and try again.';
@@ -153,15 +57,13 @@
 		}
 	}
 
-	function writeToDatabase(jsonContent: LaraJobsFeedXml) {
+	function writeToIndexedDB(jsonContent: LaraJobsFeedXml) {
 		if (!jsonContent) {
 			console.error('No JSON content to write to database.');
 			return;
 		}
 
 		const items = jsonContent.rss.channel.item;
-
-		console.log(items);
 
 		// Add each item to the database; if an item with the same GUID exists, it will be replaced
 		items.forEach(async (item) => {
@@ -181,19 +83,19 @@
 				const date = new Date(item.pubDate._text);
 
 				await db.postings.put({
-					guid: item.guid._text.trim(), // Use GUID as the primary key
-					name: item.title._text.trim(),
-					company: item['job:company']._cdata.trim(),
-					location: item['job:location']._cdata.trim(),
-					link: item.link._text.trim(),
-					published_date: date.toISOString(),
+					guid: item.guid._text?.trim(), // Use GUID as the primary key
+					name: item.title._text?.trim(),
+					company: item['job:company']._cdata?.trim(),
+					location: item['job:location']._cdata?.trim(),
+					link: item.link._text?.trim(),
+					published_date: date?.toISOString(),
 					parsed_published_date: date,
-					creator: item['dc:creator']._cdata.trim(),
-					category: item.category._cdata.trim(),
-					job_type: item['job:job_type']._cdata.trim(),
-					salary: item['job:salary']._cdata.trim(),
-					company_logo: item['job:company_logo']._text.trim(),
-					tags: item['job:tags']._cdata.split(',').map((tag) => tag.trim())
+					creator: item['dc:creator']._cdata?.trim(),
+					category: item.category._cdata?.trim(),
+					job_type: item['job:job_type']._cdata?.trim(),
+					salary: item['job:salary']._cdata?.trim(),
+					company_logo: item['job:company_logo']._text?.trim(),
+					tags: item['job:tags']._cdata?.split(',')?.map((tag) => tag?.trim())
 				});
 			} catch (error) {
 				console.error('Error writing item to database:', error);
@@ -413,11 +315,11 @@
 				}
 			}
 
-			if (parsedTags.length > 0) {
-				if (parsedTags.length === 1 && parsedTags[0] === 'none') {
+			if (parsedTags?.length > 0) {
+				if (parsedTags?.length === 1 && parsedTags[0] === 'none') {
 					collection = collection.filter((posting) => {
 						return (
-							posting.tags.length === 0 || (posting.tags.length === 1 && posting.tags[0] === '')
+							posting.tags?.length === 0 || (posting.tags?.length === 1 && posting.tags[0] === '')
 						);
 					});
 				} else {
@@ -453,6 +355,16 @@
 			return await collection.sortBy('parsed_published_date').then((results) => results.reverse());
 		});
 	});
+
+	async function fetchAndStoreFeed() {
+		const response = await fetch('/api/larajobs/feed');
+
+		if (response.ok) {
+			writeToIndexedDB(await response.json());
+		} else {
+			console.error('Failed to fetch LaraJobs feed:', response.statusText);
+		}
+	}
 </script>
 
 <svelte:head>
@@ -473,6 +385,12 @@
 	<!-- MARK: - Top Items -->
 	<div class="flex items-center mt-6 gap-x-4 justify-between max-w-4xl mx-auto">
 		<div class="flex gap-x-4">
+			<button
+				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500"
+				onclick={fetchAndStoreFeed}
+			>
+				Fetch and Store Feed
+			</button>
 			<button
 				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500"
 				onclick={() => setShowParseRssContent(!showParseRssContent)}
@@ -531,7 +449,7 @@
 			<div>
 				<button
 					class="px-6 py-4 rounded-lg border-2 text-white hover:bg-white bg-red-500 cursor-pointer border-red-500 hover:text-red-500"
-					onclick={parseRssContent}
+					onclick={parseRssContentFromInput}
 				>
 					Parse RSS Content
 				</button>
@@ -721,13 +639,13 @@
 	</div>
 
 	<div class="text-center mb-4">
-		Total: {$postings ? $postings.length : 0} job posting{$postings && $postings.length !== 1
+		Total: {$postings ? $postings?.length : 0} job posting{$postings && $postings?.length !== 1
 			? 's'
 			: ''}
 	</div>
 
 	<div>
-		{#if $postings && $postings.length === 0}
+		{#if $postings && $postings?.length === 0}
 			<p class="text-center">
 				No job postings available. Please add some using the RSS parser above.
 			</p>
@@ -758,7 +676,7 @@
 						<a href={posting.link} class="text-blue-500 hover:text-blue-700" target="_blank"
 							>View Job Posting</a
 						>
-						{#if posting.tags.length > 0 && posting.tags[0]}
+						{#if posting?.tags?.length > 0 && posting?.tags[0]}
 							<div class="mt-2">
 								{#each posting.tags as tag}
 									<span
