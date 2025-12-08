@@ -5,8 +5,12 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { manifestPlugin } from './vite-plugin-manifest';
 
 export default defineConfig({
+	define: {
+		'import.meta.env.BASE_PATH': JSON.stringify(process.env.BASE_PATH || '')
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
@@ -14,7 +18,8 @@ export default defineConfig({
 		paraglideVitePlugin({
 			project: './project.inlang',
 			outdir: './src/lib/paraglide'
-		})
+		}),
+		manifestPlugin()
 	],
 	test: {
 		expect: { requireAssertions: true },

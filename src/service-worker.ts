@@ -10,7 +10,7 @@
 // Only necessary if you have an import from `$env/static/public`
 /// <reference types="../.svelte-kit/ambient.d.ts" />
 
-import { build, files, version } from '$service-worker';
+import { build, files, version, base } from '$service-worker';
 
 // This gives `self` the correct types
 const self = globalThis.self as unknown as ServiceWorkerGlobalScope;
@@ -52,9 +52,13 @@ self.addEventListener('fetch', (event) => {
 		const url = new URL(event.request.url);
 		const cache = await caches.open(CACHE);
 
+		// Remove the base path from the pathname for comparison with ASSETS
+		// This ensures assets are properly matched regardless of deployment base path
+		const pathname = url.pathname.replace(base, '');
+
 		// `build`/`files` can always be served from the cache
-		if (ASSETS.includes(url.pathname)) {
-			const response = await cache.match(url.pathname);
+		if (ASSETS.includes(pathname)) {
+			const response = await cache.match(event.request);
 
 			if (response) {
 				return response;

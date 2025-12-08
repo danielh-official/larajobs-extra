@@ -1,8 +1,13 @@
 <script lang="ts">
 	import './layout.css';
+	import { base, assets } from '$app/paths';
 
 	let { children } = $props();
 </script>
+
+<svelte:head>
+	<link rel="manifest" href="{assets}/manifest.json" />
+</svelte:head>
 
 <div class="dark:text-white dark:bg-gray-800 p-4 rounded shadow">
 	{@render children()}
