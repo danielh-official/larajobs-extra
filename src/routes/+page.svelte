@@ -397,13 +397,21 @@
 				</button>
 			{/if}
 			<button
-				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500"
+				class={{
+					'px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer border-red-500 hover:text-red-500': true,
+					'bg-red-500': !showParseRssContent,
+					'bg-gray-500': showParseRssContent
+				}}
 				onclick={() => setShowParseRssContent(!showParseRssContent)}
 			>
 				{showParseRssContent ? 'Hide RSS Parser' : 'Show RSS Parser'}
 			</button>
 			<button
-				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500"
+				class={{
+					'px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer border-red-500 hover:text-red-500': true,
+					'bg-red-500': !showFilters,
+					'bg-gray-500': showFilters
+				}}
 				onclick={() => setShowFilters(!showFilters)}
 			>
 				{showFilters ? 'Hide Filters' : 'Show Filters'}
