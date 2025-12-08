@@ -14,7 +14,7 @@
 	let loading = $state(false);
 
 	let showParseRssContent = $state(false);
-	let showFetchAndStoreFeedButton = $state(false);
+	let serverIsAvailable = $state(false);
 
 	function setShowParseRssContent(value: boolean) {
 		showParseRssContent = value;
@@ -41,7 +41,7 @@
 
 		const serverCheckResponse = await fetch('/api/check');
 
-		showFetchAndStoreFeedButton = serverCheckResponse.ok;
+		serverIsAvailable = serverCheckResponse.ok;
 
 		loading = false;
 	});
@@ -385,17 +385,29 @@
 		></div>
 	</div>
 {:else}
+	{#if !serverIsAvailable}
+		<div
+			class="max-w-4xl mx-auto mt-6 p-4 border rounded shadow text-center bg-yellow-100 text-yellow-800"
+		>
+			Server is unavailable. This is a static version of this site. Operations like "Fetch and Store
+			Feed" are unavailable on static. See the respository <a
+				href="https://github.com/danielh-official/larajobs-extra"
+				target="_blank"
+				class="text-blue-500 hover:text-blue-700">README</a
+			> (Section: Using Full Version) for instructions on deploying the full version with server API.
+		</div>
+	{/if}
+
 	<!-- MARK: - Top Items -->
 	<div class="flex items-center mt-6 gap-x-4 justify-between max-w-4xl mx-auto">
 		<div class="flex gap-x-4">
-			{#if showFetchAndStoreFeedButton}
-				<button
-					class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500"
-					onclick={fetchAndStoreFeed}
-				>
-					Fetch and Store Feed
-				</button>
-			{/if}
+			<button
+				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500 disabled:opacity-50 disabled:pointer-events-none"
+				onclick={fetchAndStoreFeed}
+				disabled={!serverIsAvailable}
+			>
+				Fetch and Store Feed
+			</button>
 			<button
 				class={{
 					'px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer border-red-500 hover:text-red-500': true,
