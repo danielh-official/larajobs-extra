@@ -313,7 +313,7 @@
 					collection = collection.filter((posting) => !!posting.salary.trim());
 				} else {
 					collection = collection.filter((posting) =>
-						posting.salary.toLowerCase().includes(salary.trim().toLowerCase())
+						posting.salary?.toLowerCase().includes(salary.trim()?.toLowerCase())
 					);
 				}
 			}
@@ -327,7 +327,7 @@
 					});
 				} else {
 					collection = collection.filter((posting) => {
-						const postingTags = posting.tags.map((tag) => tag.toLowerCase());
+						const postingTags = posting.tags?.map((tag) => tag.toLowerCase()) || [];
 						return parsedTags.every((tag) => postingTags.includes(tag));
 					});
 				}
