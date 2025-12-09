@@ -5,7 +5,7 @@ import { join } from 'path';
 export function manifestPlugin(): Plugin {
 	return {
 		name: 'generate-manifest',
-		writeBundle(options, bundle) {
+		writeBundle(options) {
 			const outDir = options.dir || 'build';
 			const basePath = process.env.BASE_PATH || '';
 
