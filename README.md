@@ -8,7 +8,13 @@ For any bug reports or feature requests, visit the [issues](https://github.com/d
 
 ## Local Development
 
-1. Clone: `git clone https://github.com/danielh-official/larajobs-extra.git`
+1. Fork and clone
+
+```bash
+git clone https://github.com/YOUR-USERNAME/larajobs-extra.git
+cd larajobs-extra
+```
+
 2. Install packages: `pnpm install`
 3. Run the server: `pnpm dev`
 
