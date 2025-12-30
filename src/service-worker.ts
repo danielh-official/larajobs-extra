@@ -48,8 +48,13 @@ self.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
 	if (event.request.method !== 'GET') return;
 
+	const url = new URL(event.request.url);
+
+	// Ignore non-HTTP(S) requests (e.g. chrome-extension://), which
+	// are not supported by the Cache API and will cause errors
+	if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+
 	async function respond() {
-		const url = new URL(event.request.url);
 		const cache = await caches.open(CACHE);
 
 		// `build`/`files` can always be served from the cache
@@ -72,7 +77,7 @@ self.addEventListener('fetch', (event) => {
 				throw new Error('invalid response from fetch');
 			}
 
-			if (response.status === 200) {
+			if (response.status === 200 && cache) {
 				cache.put(event.request, response.clone());
 			}
 
