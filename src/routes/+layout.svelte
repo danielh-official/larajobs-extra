@@ -4,8 +4,10 @@
 	let { children } = $props();
 </script>
 
-<div class="dark:text-white dark:bg-gray-800 p-4 rounded shadow">
-	{@render children()}
+<div class="dark:text-white dark:bg-gray-800 p-4 rounded shadow min-h-screen flex flex-col">
+	<div class="grow">
+		{@render children()}
+	</div>
 
 	<footer class="text-center text-sm text-gray-500 my-8">
 		<p>
@@ -30,7 +32,7 @@
 	<a
 		target="_blank"
 		rel="noopener noreferrer"
-		class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition flex gap-x-2"
+		class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition flex gap-x-2 hidden md:flex"
 		href="https://github.com/danielh-official/larajobs-extra"
 		><svg viewBox="0 0 24 24" aria-hidden="true" class="size-6 fill-slate-100"
 			><path

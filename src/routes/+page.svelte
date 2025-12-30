@@ -7,6 +7,7 @@
 	import { browser } from '$app/environment';
 	import * as chrono from 'chrono-node';
 	import { parseRssContent, type LaraJobsFeedXml } from '$lib';
+	import { PUBLIC_SERVER_IS_AVAILABLE } from '$env/static/public';
 
 	let content = $state('');
 	let parseError: string | null = $state(null);
@@ -14,7 +15,7 @@
 	let loading = $state(false);
 
 	let showParseRssContent = $state(false);
-	let serverIsAvailable = $state(false);
+	let serverIsAvailable = $derived.by(() => PUBLIC_SERVER_IS_AVAILABLE);
 
 	function setShowParseRssContent(value: boolean) {
 		showParseRssContent = value;
@@ -38,10 +39,6 @@
 			showParseRssContent = localStorage.getItem('showParseRssContent') === 'true' ? true : false;
 			showFilters = localStorage.getItem('showFilters') === 'true' ? true : false;
 		}
-
-		const serverCheckResponse = await fetch('/api/check');
-
-		serverIsAvailable = serverCheckResponse.ok;
 
 		loading = false;
 	});
@@ -400,7 +397,7 @@
 
 	<!-- MARK: - Top Items -->
 	<div class="flex items-center mt-6 gap-x-4 justify-between max-w-4xl mx-auto">
-		<div class="flex gap-x-4">
+		<div class="flex md:flex-row flex-col md:gap-x-4 gap-y-4">
 			<button
 				class="px-4 py-2 rounded-lg border-2 text-white hover:bg-white cursor-pointer bg-red-500 border-red-500 hover:text-red-500 disabled:opacity-50 disabled:pointer-events-none"
 				onclick={fetchAndStoreFeed}
