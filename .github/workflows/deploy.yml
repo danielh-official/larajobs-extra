@@ -33,7 +33,7 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-          PUBLIC_SERVER_IS_AVAILABLE: false
+          PUBLIC_ADAPTER: static
         run: |
           pnpm run build
 

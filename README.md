@@ -48,7 +48,7 @@ You can use features like "Fetch and Store Feed" by cloning or downloading the r
 If you want to deploy your own instance to a live site, [Vercel](https://vercel.com/) is a good option.
 
 > [!IMPORTANT]
-> The steps are the same like for any other Vercel deployment, except for one **important caveat**. By default, the adapter is "static". To make this work with Vercel or any environment that allows for using SvelteKit's backend server, you need to set the following environment variable: `ADAPTER=auto`
+> The steps are the same like for any other Vercel deployment, except for one **important caveat**. By default, the adapter is "static". To make this work with Vercel or any environment that allows for using SvelteKit's backend server, you need to set the following environment variable: `PUBLIC_ADAPTER=auto`
 >
 > If the environment variable is not set, the config will use static and the deployment will fail on build.
 

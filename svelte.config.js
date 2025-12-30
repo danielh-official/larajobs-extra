@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 function getAdapter() {
-	const selectedAdapter = process.env.ADAPTER || 'static';
+	const selectedAdapter = process.env.PUBLIC_ADAPTER || 'static';
 
 	console.log('The current selected adapter is:', selectedAdapter);
 

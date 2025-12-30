@@ -7,7 +7,7 @@
 	import { browser } from '$app/environment';
 	import * as chrono from 'chrono-node';
 	import { parseRssContent, type LaraJobsFeedXml } from '$lib';
-	import { PUBLIC_SERVER_IS_AVAILABLE } from '$env/static/public';
+	import { PUBLIC_ADAPTER } from '$env/static/public';
 
 	let content = $state('');
 	let parseError: string | null = $state(null);
@@ -15,7 +15,7 @@
 	let loading = $state(false);
 
 	let showParseRssContent = $state(false);
-	let serverIsAvailable = $derived.by(() => PUBLIC_SERVER_IS_AVAILABLE);
+	let serverIsAvailable = $derived.by(() => PUBLIC_ADAPTER !== 'static');
 
 	function setShowParseRssContent(value: boolean) {
 		showParseRssContent = value;
